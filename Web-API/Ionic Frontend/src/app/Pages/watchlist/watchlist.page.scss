@@ -1,0 +1,110 @@
+ion-content.watchlist-content {
+  --background: var(--film-bg);
+}
+
+ion-toolbar {
+  --background: var(--film-surface);
+  --color: var(--film-text);
+  --border-color: var(--film-border);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+
+  ion-icon {
+    font-size: 64px;
+    color: var(--film-muted);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  h3 {
+    color: var(--film-text);
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: var(--film-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  ion-button {
+    --border-color: var(--film-accent-soft);
+    --color: var(--film-accent-soft);
+    --border-radius: 12px;
+  }
+}
+
+ion-list {
+  background: transparent;
+  padding: 8px 16px;
+}
+
+ion-item-sliding {
+  margin-bottom: 8px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+ion-item.watchlist-item {
+  --background: var(--film-card);
+  --padding-start: 12px;
+  --padding-end: 4px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  --inner-border-width: 0;
+  --border-radius: 12px;
+  border: 0.5px solid var(--film-border);
+
+  .list-poster {
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .item-title {
+    color: var(--film-text);
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .item-year {
+    color: var(--film-muted);
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .item-actors {
+    color: var(--film-muted);
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  ion-button {
+    --color: var(--film-muted);
+    margin: 0;
+
+    ion-icon {
+      font-size: 24px;
+      color: #4ade80;
+    }
+  }
+}
+
+ion-item-option {
+  font-size: 13px;
+  font-weight: 500;
+}

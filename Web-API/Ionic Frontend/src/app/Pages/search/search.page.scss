@@ -1,0 +1,87 @@
+ion-content.auth-content {
+  --background: var(--film-bg);
+}
+
+ion-toolbar {
+  --background: var(--film-surface);
+  --color: var(--film-text);
+  --border-color: var(--film-border);
+}
+
+.search-section {
+  padding: 12px 16px;
+  background: var(--film-surface);
+  border-bottom: 0.5px solid var(--film-border);
+
+  ion-searchbar {
+    --background: var(--film-input-bg);
+    --color: var(--film-text);
+    --placeholder-color: var(--film-muted);
+    --icon-color: var(--film-muted);
+    --border-radius: 12px;
+    --box-shadow: none;
+    padding: 0;
+  }
+}
+
+.brand-area {
+  text-align: center;
+  padding: 60px 20px;
+
+  .brand-tagline {
+    color: var(--film-muted);
+    font-size: 14px;
+  }
+
+  ion-icon {
+    color: var(--film-muted);
+    font-size: 64px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .brand-name {
+    color: var(--film-text);
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+}
+
+ion-card {
+  margin: 10px 16px;
+  background: var(--film-card);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 0.5px solid var(--film-border);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+  .movie-poster {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    background: var(--film-surface);
+  }
+
+  ion-card-header {
+    padding: 12px 14px 14px;
+
+    ion-card-title {
+      color: var(--film-text);
+      font-size: 16px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    ion-card-subtitle {
+      color: var(--film-muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+  }
+}

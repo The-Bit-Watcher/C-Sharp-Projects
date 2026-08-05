@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>FilmLog</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="auth-content" fullscreen>
+
+  <div class="search-section">
+    <ion-searchbar
+      class="search-bar"
+      placeholder="Search movies..."
+      debounce="500"
+      [value]="searchItem"
+      (ionInput)="onSearch($event.detail.value || '')"
+      animated="true">
+    </ion-searchbar>
+  </div>
+
+  <div class="brand-area" *ngIf="!(movies$ | async)?.length && !searchItem">
+    <p class="brand-tagline">Search your favourite movies.</p>
+  </div>
+  
+  <div class="brand-area" *ngIf="!(movies$ | async)?.length && searchItem">
+    <ion-icon name="film-outline" size="large" style="font-size: 64px; color: var(--film-muted);"></ion-icon>
+    <h1 class="brand-name">No movies found</h1>
+    <p class="brand-tagline">Try searching with a different title</p>
+  </div>
+  
+  <ng-container *ngIf="movies$ | async as movies">
+    <ion-card
+      *ngFor="let movie of movies"
+      button
+      (click)="goToDetail(movie)">
+
+      <img
+        [src]="movie.img"
+        [alt]="movie.title"
+        class="movie-poster"/>
+
+      <ion-card-header>
+        <ion-card-title>{{ movie.title }}</ion-card-title>
+        <ion-card-subtitle>{{ movie.year }}</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </ng-container>
+
+</ion-content>

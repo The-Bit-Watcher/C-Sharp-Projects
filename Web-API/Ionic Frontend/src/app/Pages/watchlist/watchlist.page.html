@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Watchlist</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="watchlist-content">
+  <div class="empty-state" *ngIf="watchList.length === 0">
+    <ion-icon name="bookmark-outline"></ion-icon>
+    <h3>Nothing here yet</h3>
+    <p>Search for movies and add them to your watchlist.</p>
+    <ion-button fill="outline" routerLink="/tabs/search">
+      <ion-icon slot="start" name="search-outline"></ion-icon>
+      Find Movies
+    </ion-button>
+  </div>
+
+  <ion-list *ngIf="watchList.length > 0" lines="none">
+
+    <ion-item-sliding *ngFor="let item of watchList">
+
+      <ion-item
+        button
+        detail="false"
+        class="watchlist-item"
+        (click)="goToDetail(item.movie)">
+
+        <img
+          slot="start"
+          [src]="item.movie.img"
+          [alt]="item.movie.title"
+          class="list-poster"
+          (error)="item.movie.img = 'assets/default-poster.jpg'"/>
+
+        <ion-label>
+          <h2 class="item-title">{{ item.movie.title }}</h2>
+          <p class="item-year">{{ item.movie.year }}</p>
+          <p class="item-actors">{{ item.movie.actors.join(', ') }}</p>
+        </ion-label>
+
+        <ion-button
+          slot="end"
+          fill="clear"
+          (click)="markAsWatched($event, item.movie)">
+          <ion-icon
+            slot="icon-only"
+            name="checkmark-circle-outline"
+            color="success">
+          </ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option
+          color="danger"
+          (click)="removeFromWatchlist(item.movie.imbd_id)">
+          <ion-icon slot="top" name="trash-outline"></ion-icon>
+          Remove
+        </ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

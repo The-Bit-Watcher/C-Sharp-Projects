@@ -1,0 +1,120 @@
+ion-content.auth-content {
+  --background: var(--film-bg);
+}
+
+.brand-area {
+  text-align: center;
+  padding: 60px 20px 28px;
+
+  .brand-name {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--film-accent-soft);
+    letter-spacing: -1px;
+    margin: 0;
+  }
+
+  .brand-tagline {
+    color: var(--film-muted);
+    font-size: 14px;
+    margin-top: 8px;
+  }
+}
+
+.auth-card {
+  background: var(--film-surface);
+  margin: 0 16px 32px;
+  border-radius: 20px;
+  padding: 24px 20px;
+  border: 0.5px solid var(--film-border);
+
+  .form-title {
+    color: var(--film-text);
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 0 20px;
+  }
+}
+
+.input-item {
+  --background: var(--film-input-bg);
+  --border-radius: 12px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --inner-padding-end: 0;
+  --highlight-color-focused: var(--film-accent);
+  --color: var(--film-text);
+  border-radius: 12px;
+  border: 0.5px solid var(--film-border);
+  margin-bottom: 12px;
+
+  ion-input {
+    --color: var(--film-text);
+    --placeholder-color: var(--film-muted);
+    --placeholder-opacity: 1;
+    font-size: 14px;
+
+    &::part(label) {
+      color: var(--film-muted);
+    }
+  }
+
+  ion-button {
+    --color: var(--film-muted);
+    margin: 0;
+
+    &:hover {
+      --color: var(--film-accent-soft);
+    }
+  }
+}
+
+.submit-btn {
+  --background: var(--film-accent);
+  --background-activated: #6d28d9;
+  --background-hover: #6d28d9;
+  --border-radius: 12px;
+  --color: var(--film-text);
+  font-size: 15px;
+  font-weight: 500;
+  height: 48px;
+  margin-top: 8px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--film-border);
+  }
+
+  span {
+    color: var(--film-muted);
+    font-size: 13px;
+  }
+}
+
+.toggle-area {
+  text-align: center;
+
+  p {
+    color: var(--film-muted);
+    font-size: 13px;
+    margin: 0;
+  }
+
+  .toggle-btn {
+    --color: var(--film-accent-soft);
+    font-size: 13px;
+    font-weight: 500;
+    height: 36px;
+    margin-top: 2px;
+  }
+}

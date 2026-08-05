@@ -1,0 +1,95 @@
+ion-content.watched-content {
+  --background: var(--film-bg);
+}
+
+ion-toolbar {
+  --background: var(--film-surface);
+  --color: var(--film-text);
+  --border-color: var(--film-border);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+
+  ion-icon {
+    font-size: 64px;
+    color: var(--film-muted);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  h3 {
+    color: var(--film-text);
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: var(--film-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  ion-button {
+    --background: var(--film-accent);
+    --border-radius: 12px;
+    --color: var(--film-text);
+  }
+}
+
+ion-item.watched-item {
+  --background: var(--film-card);
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --border-color: var(--film-border);
+  --inner-border-width: 0;
+  margin: 8px 16px;
+  border-radius: 12px;
+  border: 0.5px solid var(--film-border);
+
+  .list-poster {
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 12px;
+  }
+
+  .item-title {
+    color: var(--film-text);
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .item-year {
+    color: var(--film-muted);
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .item-actors {
+    color: var(--film-muted);
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .times-watched {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    color: var(--film-accent-soft);
+    font-size: 12px;
+
+    ion-icon {
+      font-size: 14px;
+    }
+  }
+}

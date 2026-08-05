@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/search"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ movie?.title || 'Movie Details' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="detail-content" *ngIf="movie; else noMovie">
+
+  <div class="poster-container">
+    <img
+      [src]="movie.img"
+      [alt]="movie.title"
+      class="movie-poster"
+      (error)="movie.img = 'assets/default-poster.jpg'"/>
+    <div class="poster-overlay"></div>
+  </div>
+
+  <div class="detail-body">
+
+    <div class="title-row">
+      <h1 class="movie-title">{{ movie.title }}</h1>
+      <span class="movie-year">{{ movie.year }}</span>
+    </div>
+
+    <div class="meta-row">
+      <ion-badge class="rank-badge">Rank #{{ movie.rank }}</ion-badge>
+    </div>
+
+    <div class="section">
+      <h3 class="section-label">
+        <ion-icon name="people-outline"></ion-icon>
+        Cast
+      </h3>
+      <div class="actors-list">
+        <ion-chip
+          *ngFor="let actor of movie.actors"
+          class="actor-chip">
+          {{ actor }}
+        </ion-chip>
+      </div>
+    </div>
+
+    <!-- Also known as -->
+    <div class="section" *ngIf="movie.aka">
+      <h3 class="section-label">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        Also Known As
+      </h3>
+      <p class="aka-text">{{ movie.aka }}</p>
+    </div>
+
+    <div class="section">
+      <a [href]="movie.imbd_url" target="_blank" class="imdb-link">
+        <ion-icon name="open-outline"></ion-icon>
+        View on IMDb
+      </a>
+    </div>
+
+  </div>
+
+  <div class="action-buttons">
+    <ion-button
+      expand="block"
+      fill="outline"
+      class="watchlist-btn"
+      (click)="addToWatchlist($event)">
+      <ion-icon slot="start" name="bookmark-outline"></ion-icon>
+      Add to Watchlist
+    </ion-button>
+
+    <ion-button
+      expand="block"
+      class="watched-btn"
+      (click)="addToWatched($event)">
+      <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+      Mark as Watched
+    </ion-button>
+  </div>
+
+</ion-content>
+
+<ng-template #noMovie>
+  <div class="error-container">
+    <ion-icon name="sad-outline"></ion-icon>
+    <h2>Movie not found</h2>
+    <ion-button routerLink="/tabs/search">Go Back to Search</ion-button>
+  </div>
+</ng-template>

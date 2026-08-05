@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Watched</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="watched-content">
+
+  <div class="empty-state" *ngIf="watched.length === 0">
+    <ion-icon name="film-outline"></ion-icon>
+    <h3>No watched movies yet</h3>
+    <p>Mark movies as watched and they'll appear here.</p>
+    <ion-button fill="outline" routerLink="/tabs/watchlist">
+      <ion-icon slot="start" name="bookmark-outline"></ion-icon>
+      Go to Watchlist
+    </ion-button>
+  </div>
+
+  <ion-list *ngIf="watched.length > 0" lines="none">
+
+    <ion-item-sliding *ngFor="let item of watched">
+
+      <ion-item
+        button
+        detail="false"
+        class="watched-item"
+        (click)="goToDetail(item.movie)">
+
+        <img
+          slot="start"
+          [src]="item.movie.img"
+          [alt]="item.movie.title"
+          class="list-poster"/>
+
+        <ion-label>
+          <h2 class="item-title">{{ item.movie.title }}</h2>
+          <p class="item-year">{{ item.movie.year }}</p>
+          <p class="item-actors">{{ item.movie.actors.join(', ') }}</p>
+
+          <div class="times-watched">
+            <ion-icon name="eye-outline"></ion-icon>
+            <span>Watched {{ item.timesWatched }}x</span>
+          </div>
+        </ion-label>
+
+        <ion-button
+          slot="end"
+          fill="clear"
+          (click)="resetWatched($event, item.movie)">
+          <ion-icon
+            slot="icon-only"
+            name="refresh-circle-outline"
+            color="warning">
+          </ion-icon>
+        </ion-button>
+
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option
+          color="danger"
+          (click)="removeFromWatched($event, item.movie.imbd_id)">
+          <ion-icon slot="top" name="trash-outline"></ion-icon>
+          Remove
+        </ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+  </ion-list>
+
+</ion-content>
