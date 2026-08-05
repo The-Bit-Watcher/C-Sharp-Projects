@@ -1,0 +1,72 @@
+<div class="edit-event-container">
+  <mat-card class="edit-event-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>add_circle</mat-icon>
+        Add Event
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form #eventForm="ngForm" (ngSubmit)="addEvent()">
+        <div class="form-field">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Event Name *</mat-label>
+            <input matInput 
+                   [(ngModel)]="addEv.EventName"
+                   type="text" 
+                   name="EventName" 
+                   required>
+            <mat-error>
+              Event name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-field">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Location *</mat-label>
+            <input matInput 
+                   [(ngModel)]="addEv.Location"
+                   type="text" 
+                   name="Location" 
+                   required>
+            <mat-error>
+              Location is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-field">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Ticket Price *</mat-label>
+            <input matInput 
+                   type="number" 
+                   [(ngModel)]="addEv.TicketPrice" 
+                   name="ticketPrice" 
+                   required
+                   min="0"
+                   step="0.01">
+            <mat-error>
+              Valid ticket price is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">               
+          <button mat-raised-button 
+                  color="primary" 
+                  type="submit" 
+                  [disabled]="!eventForm.valid">
+            <mat-icon>add</mat-icon>
+            Add Event
+          </button>
+          <button mat-button type="button" (click)="cancel()">
+            <mat-icon>cancel</mat-icon>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

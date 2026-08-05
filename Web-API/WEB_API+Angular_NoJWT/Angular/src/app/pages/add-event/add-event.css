@@ -1,0 +1,117 @@
+.edit-event-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 120px);
+  padding: 20px;
+  background: linear-gradient(135deg, #e8f0f2, #cbd5e0);
+}
+
+.edit-event-card {
+  max-width: 550px;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  overflow: hidden;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.edit-event-card mat-card-header {
+  background: linear-gradient(135deg, #0f2027, #203a43);
+  padding: 20px;
+  margin: -1px -1px 0 -1px;
+}
+
+.edit-event-card mat-card-title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+.edit-event-card mat-card-content {
+  padding: 24px;
+  background: white;
+}
+
+.form-field { margin-bottom: 20px; }
+.full-width { width: 100%; }
+
+.form-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+  justify-content: center;
+}
+
+.form-actions button[type="submit"] {
+  background: linear-gradient(135deg, #0f2027, #203a43);
+  color: white;
+  padding: 8px 24px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.form-actions button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(15,32,39,0.4);
+  background: linear-gradient(135deg, #1a3a44, #2c4a58);
+}
+
+.form-actions button[type="button"] {
+  background: white;
+  color: #6c757d;
+  border: 1px solid #dee2e6;
+  padding: 8px 24px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.form-actions button[type="button"]:hover {
+  background: #f8f9fa;
+  color: #dc2626;
+  border-color: #dc2626;
+  transform: translateY(-2px);
+}
+
+.Title {
+  text-align: center;
+  margin: 0;
+  padding: 24px 0 0;
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #0f2027, #203a43);
+  animation: fadeInDown 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .edit-event-container { padding: 16px; }
+  .edit-event-card mat-card-header { padding: 16px; }
+  .edit-event-card mat-card-title { font-size: 1.25rem; }
+  .edit-event-card mat-card-content { padding: 20px; }
+  .form-actions { flex-direction: column; }
+  .form-actions button { width: 100%; }
+  .Title { font-size: 1.5rem; padding-top: 16px; }
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused [class*="outline"],
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-label {
+  color: #2c5364 !important;
+}
+
+mat-error { color: #dc2626; font-size: .75rem; }
+.edit-event-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }

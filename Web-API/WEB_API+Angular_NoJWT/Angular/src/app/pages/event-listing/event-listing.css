@@ -1,0 +1,45 @@
+/* Container to hold cards in a grid */
+.event-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  align-items: stretch;
+  padding: 10px;
+}
+
+/* Individual card wrapper */
+.list-card-wrapper {
+  flex: 1 1 280px;
+  max-width: 350px;
+}
+
+/* Optional: card styling */
+.game-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* EventName */
+.game-card-avatar mat-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c5364;
+}
+
+/* Buttons */
+.list-card mat-card-actions button:first-child {
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 100%);
+  color: white;
+  border-radius: 6px;
+}
+
+.list-card mat-card-actions button:last-child {
+  color: #dc2626;
+  border-radius: 6px;
+}
+
+.list-card mat-card-actions button:last-child:hover {
+  background: #fee2e2;
+}
