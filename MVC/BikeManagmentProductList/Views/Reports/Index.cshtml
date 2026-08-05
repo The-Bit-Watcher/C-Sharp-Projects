@@ -1,0 +1,314 @@
+﻿@model Assignment3.Models.ReportsViewModel
+@{
+    ViewBag.Title = "Business Reports";
+}
+
+<h2>Business Intelligence Reports</h2>
+
+<!-- Filter Section -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">Report Filters</h5>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "Reports", FormMethod.Post))
+        {
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Start Date</label>
+                    @Html.TextBoxFor(m => m.Filter.StartDate, new { @class = "form-control", type = "date" })
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">End Date</label>
+                    @Html.TextBoxFor(m => m.Filter.EndDate, new { @class = "form-control", type = "date" })
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Report Type</label>
+                    @Html.DropDownListFor(m => m.Filter.ReportType, new SelectList(new[] {
+                        "All Reports", "Sales Analysis", "Performance", "Inventory"
+                    }), new { @class = "form-control" })
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Generate Reports</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <!-- Sales Performance Chart -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Monthly Sales Performance</h5>
+                <button class="btn btn-sm btn-outline-primary" onclick="downloadChart('salesChart', 'sales-performance')">
+                    Download Chart
+                </button>
+            </div>
+            <div class="card-body">
+                <canvas id="salesChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popular Products Chart -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Top Selling Products</h5>
+                <button class="btn btn-sm btn-outline-primary" onclick="downloadChart('productsChart', 'top-products')">
+                    Download Chart
+                </button>
+            </div>
+            <div class="card-body">
+                <canvas id="productsChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Staff Performance Chart -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Staff Performance</h5>
+                <button class="btn btn-sm btn-outline-primary" onclick="downloadChart('staffChart', 'staff-performance')">
+                    Download Chart
+                </button>
+            </div>
+            <div class="card-body">
+                <canvas id="staffChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stock Status Chart -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Inventory Status</h5>
+                <button class="btn btn-sm btn-outline-primary" onclick="downloadChart('stockChart', 'inventory-status')">
+                    Download Chart
+                </button>
+            </div>
+            <div class="card-body">
+                <canvas id="stockChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Export Section -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">Export Report</h5>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("ExportReport", "Reports", FormMethod.Post))
+        {
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label">File Name</label>
+                    <input type="text" name="fileName" class="form-control" placeholder="Enter file name" required>
+                    @Html.HiddenFor(m => m.Filter.StartDate)
+                    @Html.HiddenFor(m => m.Filter.EndDate)
+                    @Html.HiddenFor(m => m.Filter.ReportType)
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">File Type</label>
+                    <select name="fileType" class="form-control" required>
+                        <option value="xlsx">Excel (.xlsx)</option>
+                        <option value="pdf">PDF (.pdf)</option>
+                        <option value="csv">CSV (.csv)</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success w-100">Export Report</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Document Archive -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Document Archive</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Type</th>
+                        <th>Created Date</th>
+                        <th>Size</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var report in Model.SavedReports)
+                    {
+                        <tr>
+                            <td>@report.FileName</td>
+                            <td><span class="badge bg-secondary">@report.FileType.ToUpper()</span></td>
+                            <td>@report.CreatedDate.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>@(report.FileSize / 1024) KB</td>
+                            <td>
+                                @using (Html.BeginForm("DownloadReport", "Reports", FormMethod.Get))
+                                {
+                                    <input type="hidden" name="fileName" value="@report.FileName" />
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Download</button>
+                                }
+                                @using (Html.BeginForm("DeleteReport", "Reports", FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    <input type="hidden" name="fileName" value="@report.FileName" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Are you sure you want to delete this report?')">
+                                        Delete
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Monthly Sales Chart
+        var salesCtx = document.getElementById('salesChart').getContext('2d');
+        var salesChart = new Chart(salesCtx, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(Json.Encode(Model.MonthlySales.Select(m => m.MonthYear))),
+                datasets: [{
+                    label: 'Total Revenue',
+                    data: @Html.Raw(Json.Encode(Model.MonthlySales.Select(m => m.TotalRevenue))),
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                    yAxisID: 'y'
+                }, {
+                    label: 'Orders Count',
+                    data: @Html.Raw(Json.Encode(Model.MonthlySales.Select(m => m.TotalOrders))),
+                    borderColor: 'rgb(255, 99, 132)',
+                    tension: 0.1,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: 'Revenue ($)' }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: { display: true, text: 'Orders Count' }
+                    }
+                }
+            }
+        });
+
+        // Top Products Chart
+        var productsCtx = document.getElementById('productsChart').getContext('2d');
+        var productsChart = new Chart(productsCtx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Encode(Model.PopularProducts.Select(p => p.ProductName))),
+                datasets: [{
+                    label: 'Quantity Sold',
+                    data: @Html.Raw(Json.Encode(Model.PopularProducts.Select(p => p.TotalSold))),
+                    backgroundColor: 'rgba(54, 162, 235, 0.8)'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Units Sold' }
+                    }
+                }
+            }
+        });
+
+        // Staff Performance Chart
+        var staffCtx = document.getElementById('staffChart').getContext('2d');
+        var staffChart = new Chart(staffCtx, {
+            type: 'radar',
+            data: {
+                labels: @Html.Raw(Json.Encode(Model.StaffPerformance.Select(s => s.StaffName))),
+                datasets: [{
+                    label: 'Total Revenue',
+                    data: @Html.Raw(Json.Encode(Model.StaffPerformance.Select(s => s.TotalRevenue))),
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    pointBackgroundColor: 'rgb(255, 99, 132)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    r: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Stock Status Chart
+        var stockCtx = document.getElementById('stockChart').getContext('2d');
+        var stockStatus = @Html.Raw(Json.Encode(Model.StockStatus.GroupBy(s => s.StockStatus)
+            .Select(g => new { Status = g.Key, Count = g.Count() })));
+
+        var stockChart = new Chart(stockCtx, {
+            type: 'doughnut',
+            data: {
+                labels: stockStatus.map(s => s.Status),
+                datasets: [{
+                    data: stockStatus.map(s => s.Count),
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        function downloadChart(canvasId, fileName) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = `${fileName}-${new Date().toISOString().split('T')[0]}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+}

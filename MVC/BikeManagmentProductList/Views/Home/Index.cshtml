@@ -1,0 +1,652 @@
+﻿@model Assignment3.Models.HomeViewModel
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Home</h2>
+
+<!-- Tab Navigation -->
+<ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="products-tab" data-bs-toggle="tab" data-bs-target="#products" type="button" role="tab" aria-controls="products" aria-selected="true">
+            Products Management
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="customers-tab" data-bs-toggle="tab" data-bs-target="#customers" type="button" role="tab" aria-controls="customers" aria-selected="false">
+            Customer Purchases
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="staff-tab" data-bs-toggle="tab" data-bs-target="#staff" type="button" role="tab" aria-controls="staff" aria-selected="false">
+            Staff Sales Report
+        </button>
+    </li>
+</ul>
+
+<!-- Tab Content -->
+<div class="tab-content" id="dashboardTabsContent">
+    <!-- Products Tab -->
+    <div class="tab-pane fade show active" id="products" role="tabpanel" aria-labelledby="products-tab">
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Products List</h5>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProductModal">
+                                Create New Product
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <!-- Filter Section -->
+                            @using (Html.BeginForm("Index", "Products", FormMethod.Post, new { @class = "mb-4 p-3 border rounded" }))
+                            {
+                                <div class="row g-3 align-items-end">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Filter by Brand:</label>
+                                        @Html.DropDownList("brandFilter", new SelectList(Model.ProductsData.Brands, "brand_name", "brand_name", ViewBag.SelectedBrand), "All Brands", new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Filter by Category:</label>
+                                        @Html.DropDownList("categoryFilter", new SelectList(Model.ProductsData.Categories, "category_name", "category_name", ViewBag.SelectedCategory), "All Categories", new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-outline-primary w-100">Apply Filters</button>
+                                    </div>
+                                </div>
+                            }
+
+                            <!-- Just display all images -->
+                            <div class="mb-4">
+                                <h6>Product Images</h6>
+                                <div class="row">
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Electra_Cruiser 1.jpeg" class="card-img-top" alt="Electra Cruiser 1"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Electra Cruiser 1</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Electra_Cruiser.jpeg" class="card-img-top" alt="Electra Cruiser"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Electra Cruiser</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Haro_Bikes1.jpeg" class="card-img-top" alt="Haro Bikes"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Haro Bikes</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Haro_mountain_bike.jpeg" class="card-img-top" alt="Haro Mountain Bike"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Haro Mountain Bike</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Heler_bike2.jpeg" class="card-img-top" alt="Heler Bike"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Heler Bike</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Heller_bike1.jpeg" class="card-img-top" alt="Heller Bike"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Heller Bike</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Pure_Cycles1.jpeg" class="card-img-top" alt="Pure Cycles"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Pure Cycles</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Sun_bicycles_retro.jpeg" class="card-img-top" alt="Sun Bicycles Retro"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Sun Bicycles Retro</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Sun_Bicycles1.jpeg" class="card-img-top" alt="Sun Bicycles"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Sun Bicycles</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Surly_bike.jpeg" class="card-img-top" alt="Surly Bike"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Surly Bike</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Surly_preamble_bike.jpeg" class="card-img-top" alt="Surly Preamble Bike"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Surly Preamble Bike</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Trek_Marlin_bike.jpeg" class="card-img-top" alt="Trek Marlin Bike"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Trek Marlin Bike</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="card h-100">
+                                            <img src="/Images/Trek Xcaliber_bike.jpeg" class="card-img-top" alt="Trek Xcaliber Bike"
+                                                 style="height: 150px; object-fit: cover;">
+                                            <div class="card-body p-2 text-center">
+                                                <h6 class="card-title small">Trek Xcaliber Bike</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Products Table -->
+                            <div style="max-height: 500px; overflow-y: auto;">
+                                <table class="table table-striped table-bordered">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Brand</th>
+                                            <th>Category</th>
+                                            <th>Model Year</th>
+                                            <th>List Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var product in Model.ProductsData.Products)
+                                        {
+                                            <tr>
+                                                <td>@product.ProductName</td>
+                                                <td>@product.BrandName</td>
+                                                <td>@product.CategoryName</td>
+                                                <td>@product.ModelYear</td>
+                                                <td>@product.ListPrice.ToString("C")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customers Tab -->
+    <div class="tab-pane fade" id="customers" role="tabpanel" aria-labelledby="customers-tab">
+        <div class="container-fluid mt-3">
+            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createCustomerModal">
+                Create new Customer
+            </button>
+
+            @using (Html.BeginForm("SubmitStaff", "Home", FormMethod.Post))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="p-3" style="background-color: #f0f0f0; border-radius: 5px;">
+                            <h5>Existing Customers</h5>
+                            <div style="max-height: 400px; overflow-y: auto;">
+                                <table class="table table-bordered table-striped mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Total Orders</th>
+                                            <th>Purchase History</th>
+                                            <th>Select</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var customer in Model.CustomersData.CustomerPurchases)
+                                        {
+                                            <tr>
+                                                <td>@customer.CustomerId</td>
+                                                <td>@customer.CustomerName</td>
+                                                <td>@customer.Email</td>
+                                                <td>@customer.Purchases.Count</td>
+                                                <td>
+                                                    @if (customer.Purchases != null && customer.Purchases.Any())
+                                                    {
+                                                        <ul style="list-style-type: none; padding-left: 0; margin-bottom: 0;">
+                                                            @foreach (var purchase in customer.Purchases)
+                                                            {
+                                                                <li>
+                                                                    <strong>@purchase.ProductName</strong>
+                                                                    (Ordered: @purchase.OrderDate.ToString("MM/dd/yyyy"))
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">No purchases</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" name="SelectedCustomers" value="@customer.CustomerId" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3 w-100">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Staff Tab -->
+    <div class="tab-pane fade" id="staff" role="tabpanel" aria-labelledby="staff-tab">
+        <div class="container-fluid mt-3">
+            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createStaffModal">
+                Create new Staff
+            </button>
+
+            @using (Html.BeginForm("SubmitStaff", "staffs", FormMethod.Post))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="p-3" style="background-color: #f0f0f0; border-radius: 5px;">
+                            <h5>Staff Members and Their Sales</h5>
+                            <div style="max-height: 400px; overflow-y: auto;">
+                                <table class="table table-bordered table-striped mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Total Sales</th>
+                                            <th>Sales Details</th>
+                                            <th>Select</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var staff in Model.StaffData.Staffs)
+                                        {
+                                            <tr>
+                                                <td>@staff.StaffId</td>
+                                                <td>@staff.StaffName</td>
+                                                <td>@staff.Email</td>
+                                                <td>@staff.Solds.Count</td>
+                                                <td>
+                                                    @if (staff.Solds != null && staff.Solds.Any())
+                                                    {
+                                                        <ul style="list-style-type: none; padding-left: 0; margin-bottom: 0;">
+                                                            @foreach (var sold in staff.Solds)
+                                                            {
+                                                                <li>
+                                                                    <strong>@sold.ProductName</strong>
+                                                                    (Sold: @sold.OrderDate.ToString("MM/dd/yyyy"))
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">No sales recorded</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" name="SelectedStaff" value="@staff.StaffId" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Create Product Modal -->
+<div class="modal fade" id="createProductModal" tabindex="-1" aria-labelledby="createProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @using (Html.BeginForm("CreateProduct", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createProductModalLabel">Create New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ProductsData.NewProduct.product_name, "Product Name", htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.ProductsData.NewProduct.product_name, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                    @Html.ValidationMessageFor(model => model.ProductsData.NewProduct.product_name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ProductsData.NewProduct.brand_id, "Brand", htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.ProductsData.NewProduct.brand_id, new SelectList(Model.ProductsData.Brands, "brand_id", "brand_name"), "Select Brand", new { @class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.ProductsData.NewProduct.brand_id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ProductsData.NewProduct.category_id, "Category", htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.ProductsData.NewProduct.category_id, new SelectList(Model.ProductsData.Categories, "category_id", "category_name"), "Select Category", new { @class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.ProductsData.NewProduct.category_id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ProductsData.NewProduct.model_year, "Model Year", htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.ProductsData.NewProduct.model_year, new { htmlAttributes = new { @class = "form-control", type = "number", min = "2000", max = "2024", required = "required" } })
+                                    @Html.ValidationMessageFor(model => model.ProductsData.NewProduct.model_year, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ProductsData.NewProduct.list_price, "List Price", htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.ProductsData.NewProduct.list_price, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", required = "required" } })
+                                    @Html.ValidationMessageFor(model => model.ProductsData.NewProduct.list_price, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Product</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Create Customer Modal -->
+<div class="modal fade" id="createCustomerModal" tabindex="-1" aria-labelledby="createCustomerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @using (Html.BeginForm("CreateCustomer", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createCustomerModalLabel">Create New Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CustomersData.NewCustomer.first_name, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.CustomersData.NewCustomer.first_name, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                    @Html.ValidationMessageFor(model => model.CustomersData.NewCustomer.first_name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CustomersData.NewCustomer.last_name, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.CustomersData.NewCustomer.last_name, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                    @Html.ValidationMessageFor(model => model.CustomersData.NewCustomer.last_name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CustomersData.NewCustomer.phone, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.CustomersData.NewCustomer.phone, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CustomersData.NewCustomer.phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CustomersData.NewCustomer.email, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.CustomersData.NewCustomer.email, new { htmlAttributes = new { @class = "form-control", required = "required", type = "email" } })
+                                    @Html.ValidationMessageFor(model => model.CustomersData.NewCustomer.email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CustomersData.NewCustomer.street, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.CustomersData.NewCustomer.street, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CustomersData.NewCustomer.street, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CustomersData.NewCustomer.city, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.CustomersData.NewCustomer.city, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CustomersData.NewCustomer.city, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CustomersData.NewCustomer.state, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.CustomersData.NewCustomer.state, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CustomersData.NewCustomer.state, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CustomersData.NewCustomer.zip_code, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.CustomersData.NewCustomer.zip_code, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CustomersData.NewCustomer.zip_code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Customer</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Create Staff Modal -->
+<div class="modal fade" id="createStaffModal" tabindex="-1" aria-labelledby="createStaffModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @using (Html.BeginForm("CreateStaff", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createStaffModalLabel">Create New Staff Member</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StaffData.NewStaff.first_name, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.StaffData.NewStaff.first_name, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                    @Html.ValidationMessageFor(model => model.StaffData.NewStaff.first_name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StaffData.NewStaff.last_name, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.StaffData.NewStaff.last_name, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                    @Html.ValidationMessageFor(model => model.StaffData.NewStaff.last_name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StaffData.NewStaff.phone, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.StaffData.NewStaff.phone, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.StaffData.NewStaff.phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StaffData.NewStaff.email, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.StaffData.NewStaff.email, new { htmlAttributes = new { @class = "form-control", required = "required", type = "email" } })
+                                    @Html.ValidationMessageFor(model => model.StaffData.NewStaff.email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StaffData.NewStaff.active, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.StaffData.NewStaff.active, new SelectList(new[] {
+                                        new { Value = "1", Text = "Active" },
+                                        new { Value = "0", Text = "Inactive" }
+                                    }, "Value", "Text"), "Select Status", new { @class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.StaffData.NewStaff.active, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StaffData.NewStaff.store_id, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.StaffData.NewStaff.store_id, (SelectList)ViewBag.store_id, "Select Store", new { @class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.StaffData.NewStaff.store_id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StaffData.NewStaff.manager_id, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.StaffData.NewStaff.manager_id, (SelectList)ViewBag.manager_id, "Select Manager", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.StaffData.NewStaff.manager_id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Staff</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@functions {
+    // Helper function to map product names to image file names
+    private string GetImageName(string productName)
+    {
+        var imageMappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+{
+            {"Electra Cruiser 1", "Electra_Cruiser 1.jpeg"},
+            {"Electra Cruiser", "Electra_Cruiser.jpeg"},
+            {"Haro Bikes 1", "Haro_Bikes1.jpeg"},
+            {"Haro Mountain Bike", "Haro_mountain_bike.jpeg"},
+            {"Heler Bike 2", "Heler_bike2.jpeg"},
+            {"Heller Bike 1", "Heller_bike1.jpeg"},
+            {"Pure Cycles 1", "Pure_Cycles1.jpeg"},
+            {"Sun Bicycles Retro", "Sun_bicycles_retro.jpeg"},
+            {"Sun Bicycles 1", "Sun_Bicycles1.jpeg"},
+            {"Surly Bike", "Surly_bike.jpeg"},
+            {"Surly Preamble Bike", "Surly_preamble_bike.jpeg"},
+            {"Trek Marlin Bike", "Trek_Marlin_bike.jpeg"},
+            {"Trek Xcaliber Bike", "Trek Xcaliber_bike.jpeg"}
+        };
+
+        // Try exact match first
+        if (imageMappings.ContainsKey(productName))
+            return imageMappings[productName];
+
+        // Try partial match
+        foreach (var mapping in imageMappings)
+        {
+            if (productName.Contains(mapping.Key) || mapping.Key.Contains(productName))
+                return mapping.Value;
+        }
+
+        return "placeholder.jpeg"; // Fallback image
+    }
+
+    // Helper function to check if file exists
+    private bool FileExists(string filePath)
+    {
+        try
+        {
+            return System.IO.File.Exists(filePath);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+}

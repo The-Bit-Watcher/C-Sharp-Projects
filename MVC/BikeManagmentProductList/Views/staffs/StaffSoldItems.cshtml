@@ -1,0 +1,156 @@
+﻿@model Assignment3.Models.SoldCombinedViewModel
+
+@{
+    ViewBag.Title = "Staff Sold Items";
+}
+
+<h2>Staff Sales Report</h2>
+
+<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+        data-bs-target="#createStaffModal">
+    Create new Staff
+</button>
+
+@using (Html.BeginForm("SubmitStaff", "staffs", FormMethod.Post))
+{
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="p-3" style="background-color: #f0f0f0; border-radius: 5px;">
+
+                    <h5>Staff Members and Their Sales</h5>
+                    <div style="max-height: 400px; overflow-y: auto;">
+                        <table class="table table-bordered table-striped mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Total Sales</th>
+                                    <th>Sales Details</th>
+                                    <th>Select</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var staff in Model.Staffs)
+                                {
+                                    <tr>
+                                        <td>@staff.StaffId</td>
+                                        <td>@staff.StaffName</td>
+                                        <td>@staff.Email</td>
+                                        <td>@staff.Solds.Count</td>
+                                        <td>
+                                            @if (staff.Solds != null && staff.Solds.Any())
+                                            {
+                                                <ul style="list-style-type: none; padding-left: 0; margin-bottom: 0;">
+                                                    @foreach (var sold in staff.Solds)
+                                                    {
+                                                        <li>
+                                                            <strong>@sold.ProductName</strong>
+                                                            - @sold.ListPrice.ToString("C")
+                                                            (Sold: @sold.OrderDate.ToString("MM/dd/yyyy"))
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">No sales recorded</span>
+                                            }
+                                        </td>                                      
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="modal fade" id="createStaffModal" tabindex="-1" aria-labelledby="createStaffModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @using (Html.BeginForm("Create", "staffs", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createStaffModalLabel">Create New Staff Member</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NewStaff.first_name, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.NewStaff.first_name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NewStaff.first_name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NewStaff.last_name, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.NewStaff.last_name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NewStaff.last_name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NewStaff.phone, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.NewStaff.phone, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NewStaff.phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NewStaff.email, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.NewStaff.email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NewStaff.email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NewStaff.active, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.NewStaff.active, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NewStaff.active, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NewStaff.store_id, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.NewStaff.store_id, (SelectList)ViewBag.store_id, "Select Store", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.NewStaff.store_id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NewStaff.manager_id, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.NewStaff.manager_id, (SelectList)ViewBag.manager_id, "Select Manager", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.NewStaff.manager_id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Staff</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

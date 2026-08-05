@@ -1,0 +1,306 @@
+﻿@model Assignment3.Models.MaintainViewModel
+
+@{
+    ViewBag.Title = "Maintain Records";
+}
+
+<h2>Maintain Records</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Staff Section -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Staff Members</h5>                    
+                </div>
+                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Store</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var staff in Model.Staffs)
+                            {
+                                <tr>
+                                    <td>@staff.StaffName</td>
+                                    <td>@staff.Email</td>
+                                    <td>@staff.StoreName</td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#editStaffModal"
+                                                onclick="location.href='@Url.Action("EditStaff", "Maintain", new { id = staff.StaffId })'">
+                                            Edit
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#deleteStaffModal"
+                                                onclick="location.href='@Url.Action("DeleteStaff", "Maintain", new { id = staff.StaffId })'">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customers Section -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Customers</h5>                   
+                </div>
+                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var customer in Model.Customers)
+                            {
+                                <tr>
+                                    <td>@customer.CustomerName</td>
+                                    <td>@customer.Email</td>
+                                    <td>@customer.Phone</td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#editCustomerModal"
+                                                onclick="location.href='@Url.Action("EditCustomer", "Maintain", new { id = customer.CustomerId })'">
+                                            Edit
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#deleteCustomerModal"
+                                                onclick="location.href='@Url.Action("DeleteCustomer", "Maintain", new { id = customer.CustomerId })'">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Products</h5>
+                </div>
+                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Brand</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in Model.Products)
+                            {
+                                <tr>
+                                    <td>@product.ProductName</td>
+                                    <td>@product.BrandName</td>
+                                    <td>@product.ListPrice.ToString("C")</td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#editProductModal"
+                                                onclick="location.href='@Url.Action("EditProduct", "Maintain", new { id = product.ProductId })'">
+                                            Edit
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#deleteProductModal"
+                                                onclick="location.href='@Url.Action("DeleteProduct", "Maintain", new { id = product.ProductId })'">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Staff Modal -->
+<div class="modal fade" id="createStaffModal" tabindex="-1" aria-labelledby="createStaffModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("CreateStaff", "Maintain", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createStaffModalLabel">Create New Staff</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentStaff.first_name)
+                        @Html.EditorFor(model => model.CurrentStaff.first_name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentStaff.first_name)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentStaff.last_name)
+                        @Html.EditorFor(model => model.CurrentStaff.last_name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentStaff.last_name)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentStaff.email)
+                        @Html.EditorFor(model => model.CurrentStaff.email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentStaff.email)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentStaff.phone)
+                        @Html.EditorFor(model => model.CurrentStaff.phone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentStaff.phone)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentStaff.active)
+                        @Html.EditorFor(model => model.CurrentStaff.active, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentStaff.active)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentStaff.store_id)
+                        @Html.DropDownListFor(model => model.CurrentStaff.store_id, new SelectList(Model.Stores, "store_id", "store_name"), "Select Store", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CurrentStaff.store_id)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentStaff.manager_id)
+                        @Html.DropDownListFor(model => model.CurrentStaff.manager_id, new SelectList(Model.Managers, "staff_id", "first_name"), "Select Manager", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CurrentStaff.manager_id)
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Staff</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Create Customer Modal -->
+<div class="modal fade" id="createCustomerModal" tabindex="-1" aria-labelledby="createCustomerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("CreateCustomer", "Maintain", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createCustomerModalLabel">Create New Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentCustomer.first_name)
+                        @Html.EditorFor(model => model.CurrentCustomer.first_name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentCustomer.first_name)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentCustomer.last_name)
+                        @Html.EditorFor(model => model.CurrentCustomer.last_name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentCustomer.last_name)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentCustomer.phone)
+                        @Html.EditorFor(model => model.CurrentCustomer.phone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentCustomer.phone)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentCustomer.email)
+                        @Html.EditorFor(model => model.CurrentCustomer.email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentCustomer.email)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentCustomer.street)
+                        @Html.EditorFor(model => model.CurrentCustomer.street, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentCustomer.street)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentCustomer.city)
+                        @Html.EditorFor(model => model.CurrentCustomer.city, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentCustomer.city)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentCustomer.state)
+                        @Html.EditorFor(model => model.CurrentCustomer.state, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentCustomer.state)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentCustomer.zip_code)
+                        @Html.EditorFor(model => model.CurrentCustomer.zip_code, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentCustomer.zip_code)
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Customer</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Create Product Modal -->
+<div class="modal fade" id="createProductModal" tabindex="-1" aria-labelledby="createProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("CreateProduct", "Maintain", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createProductModalLabel">Create New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentProduct.product_name)
+                        @Html.EditorFor(model => model.CurrentProduct.product_name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentProduct.product_name)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentProduct.brand_id)
+                        @Html.DropDownListFor(model => model.CurrentProduct.brand_id, new SelectList(Model.Brands, "brand_id", "brand_name"), "Select Brand", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CurrentProduct.brand_id)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentProduct.category_id)
+                        @Html.DropDownListFor(model => model.CurrentProduct.category_id, new SelectList(Model.Categories, "category_id", "category_name"), "Select Category", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CurrentProduct.category_id)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentProduct.model_year)
+                        @Html.EditorFor(model => model.CurrentProduct.model_year, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentProduct.model_year)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentProduct.list_price)
+                        @Html.EditorFor(model => model.CurrentProduct.list_price, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CurrentProduct.list_price)
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Product</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
