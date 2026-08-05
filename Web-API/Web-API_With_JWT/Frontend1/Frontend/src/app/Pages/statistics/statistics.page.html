@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Statistics</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="statistics-content">
+  <div class="summary-section">
+    <div class="summary-card">
+      <ion-icon name="eye-outline"></ion-icon>
+      <div class="summary-value">{{ summaryStats?.totalWatched || 0 }}</div>
+      <div class="summary-label">Total Watches</div>
+    </div>
+    <div class="summary-card">
+      <ion-icon name="film-outline"></ion-icon>
+      <div class="summary-value">{{ summaryStats?.uniqueMovies || 0 }}</div>
+      <div class="summary-label">Unique Movies</div>
+    </div>
+    <div class="summary-card">
+      <ion-icon name="star-outline"></ion-icon>
+      <div class="summary-value">{{ summaryStats?.averageImdbRating || 0 }}</div>
+      <div class="summary-label">Avg IMDb Rating</div>
+    </div>
+  </div>
+  
+  <div class="most-watched-card" *ngIf="summaryStats?.mostWatchedMovie">
+    <ion-icon name="trophy-outline"></ion-icon>
+    <div class="most-watched-content">
+      <div class="most-watched-label">Most Watched</div>
+      <div class="most-watched-title">{{ summaryStats?.mostWatchedMovie }}</div>
+      <div class="most-watched-count">Watched {{ summaryStats?.mostWatchedCount }} times</div>
+    </div>
+  </div>
+  
+  <div class="charts-section">
+    <div class="chart-card">
+      <h3>Top 6 Genres</h3>
+      <canvas #genreChart></canvas>
+    </div>
+    
+    <div class="chart-card">
+      <h3>Movies Watched by Year</h3>
+      <canvas #yearlyChart></canvas>
+    </div>
+    
+    <div class="table-card">
+      <h3>Yearly Breakdown</h3>
+      <table class="stats-table">
+        <thead>
+          <tr><th>Year</th><th>Movies</th><th>%</th></tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stat of yearlyStats">
+            <td>{{ stat.year }}</td>
+            <td>{{ stat.count }}</td>
+            <td>
+              <div class="percentage-bar">
+                <div class="percentage-fill" [style.width.%]="(stat.count / getTotalWatched()) * 100"></div>
+                <span>{{ ((stat.count / getTotalWatched()) * 100) | number:'1.0-0' }}%</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ion-content>

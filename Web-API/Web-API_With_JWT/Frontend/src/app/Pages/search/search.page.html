@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>FilmLog</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="search-content" fullscreen>
+  <div class="search-section">
+    <ion-searchbar
+      class="search-bar"
+      placeholder="Search movies..."
+      [(ngModel)]="searchTerm"
+      (ionInput)="onSearchChange($event)"
+      animated="true"
+      showCancelButton="focus">
+    </ion-searchbar>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <ion-spinner name="crescent" color="warning"></ion-spinner>
+    <p>Searching movies...</p>
+  </div>
+
+  <!-- Empty State - No Search -->
+  <div class="brand-area" *ngIf="searchResults.length === 0 && !searchTerm && !isLoading">
+    <ion-icon name="film-outline" size="large"></ion-icon>
+    <p class="brand-tagline">Search your favourite movies</p>
+  </div>
+
+  <!-- Empty State - No Results -->
+  <div class="brand-area" *ngIf="searchResults.length === 0 && searchTerm && !isLoading">
+    <ion-icon name="sad-outline" size="large"></ion-icon>
+    <h3>No movies found</h3>
+    <p class="brand-tagline">Try searching with a different title</p>
+  </div>
+
+  <!-- Search Results -->
+  <ion-list *ngIf="searchResults.length > 0" lines="none" class="movie-list">
+    <ion-card
+      *ngFor="let movie of searchResults"
+      button
+      (click)="goToDetail(movie)"
+      class="movie-card">
+      
+      <img
+        [src]="movie.poster !== 'N/A' ? movie.poster : 'assets/default-poster.jpg'"
+        [alt]="movie.title"
+        class="movie-poster"
+        (error)="$event.target.src = 'assets/default-poster.jpg'"/>
+      
+      <ion-card-header>
+        <ion-card-title>{{ movie.title }}</ion-card-title>
+        <ion-card-subtitle>{{ movie.year }}</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </ion-list>
+</ion-content>

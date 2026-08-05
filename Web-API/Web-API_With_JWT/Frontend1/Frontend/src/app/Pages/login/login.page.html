@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>FilmLog</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="auth-content" fullscreen>
+  <div class="brand-area">
+    <h1 class="brand-name">FilmLog</h1>
+    <p class="brand-tagline">Track what you watch.</p>
+  </div>
+
+  <div class="auth-card">
+    <h2 class="form-title">{{ isLoginMode ? 'Welcome back' : 'Create account' }}</h2>
+
+    <ion-item *ngIf="!isLoginMode" lines="none" class="input-item">
+      <ion-input
+        label="Username"
+        label-placement="floating"
+        type="text"
+        [(ngModel)]="username"
+        placeholder="Your display name">
+      </ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="input-item">
+      <ion-input
+        label="Email"
+        label-placement="floating"
+        type="email"
+        [(ngModel)]="email"
+        placeholder="you@email.com">
+      </ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="input-item">
+      <ion-input
+        label="Password"
+        label-placement="floating"
+        [type]="showPassword ? 'text' : 'password'"
+        [(ngModel)]="password"
+        placeholder="••••••••">
+      </ion-input>
+      <ion-button fill="clear" slot="end" (click)="showPassword = !showPassword">
+        <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-button
+      expand="block"
+      class="submit-btn"
+      (click)="onSubmit()"
+      [disabled]="isLoading">
+      <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner>
+      <span *ngIf="!isLoading">{{ isLoginMode ? 'Log In' : 'Sign Up' }}</span>
+    </ion-button>
+
+    <div class="divider">
+      <span>or</span>
+    </div>
+
+    <div class="toggle-area">
+      <p>{{ isLoginMode ? "Don't have an account?" : 'Already have an account?' }}</p>
+      <ion-button fill="clear" class="toggle-btn" (click)="toggleMode()">
+        {{ isLoginMode ? 'Sign Up' : 'Log In' }}
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

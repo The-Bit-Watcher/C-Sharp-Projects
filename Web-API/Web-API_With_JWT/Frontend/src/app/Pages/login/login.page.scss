@@ -1,0 +1,89 @@
+.auth-content {
+  --background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.brand-area {
+  text-align: center;
+  padding: 60px 20px 40px;
+  
+  .brand-name {
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(135deg, #e2b714, #f39c12);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .brand-tagline {
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 8px;
+    font-size: 16px;
+  }
+}
+
+.auth-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 24px;
+  margin: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  
+  .form-title {
+    color: white;
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 24px;
+  }
+  
+  .input-item {
+    --background: rgba(255, 255, 255, 0.15);
+    --border-radius: 12px;
+    margin-bottom: 16px;
+    --color: white;
+    
+    ion-input {
+      --color: white;
+    }
+  }
+  
+  .submit-btn {
+    --background: linear-gradient(135deg, #e2b714, #f39c12);
+    --border-radius: 12px;
+    margin-top: 24px;
+    height: 48px;
+    font-weight: 600;
+    
+    &[disabled] {
+      --background: rgba(255, 255, 255, 0.3);
+    }
+  }
+  
+  .divider {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 20px 0;
+    position: relative;
+    
+    span {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0 16px;
+    }
+  }
+  
+  .toggle-area {
+    text-align: center;
+    
+    p {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 8px;
+    }
+    
+    .toggle-btn {
+      --color: #e2b714;
+      font-weight: 600;
+    }
+  }
+}

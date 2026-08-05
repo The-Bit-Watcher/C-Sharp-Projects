@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Watched</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="watched-content">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="crescent"
+      refreshingText="Loading...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <ion-spinner name="crescent" color="warning"></ion-spinner>
+    <p>Loading your watched movies...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && watchedList.length === 0">
+    <ion-icon name="eye-outline"></ion-icon>
+    <h3>No watched movies yet</h3>
+    <p>Mark movies as watched and they'll appear here.</p>
+    <ion-button fill="outline" routerLink="/tabs/search" class="find-btn">
+      <ion-icon slot="start" name="search-outline"></ion-icon>
+      Find Movies
+    </ion-button>
+  </div>
+
+  <!-- Statistics Summary -->
+  <div class="stats-summary" *ngIf="!isLoading && watchedList.length > 0">
+    <div class="stat-card">
+      <ion-icon name="eye-outline"></ion-icon>
+      <div class="stat-value">{{ watchedList.length }}</div>
+      <div class="stat-label">Movies Watched</div>
+    </div>
+    <div class="stat-card">
+      <ion-icon name="repeat-outline"></ion-icon>
+      <div class="stat-value">{{ totalWatches }}</div>
+      <div class="stat-label">Total Watches</div>
+    </div>
+    <div class="stat-card">
+      <ion-icon name="trending-up-outline"></ion-icon>
+      <div class="stat-value">{{ averageWatches | number:'1.1-1' }}</div>
+      <div class="stat-label">Avg Watch/Movie</div>
+    </div>
+  </div>
+
+  <!-- Watched Items -->
+  <ion-list *ngIf="!isLoading && watchedList.length > 0" lines="none">
+    <ion-item-sliding *ngFor="let item of watchedList">
+      <ion-item
+        button
+        detail="false"
+        class="watched-item"
+        (click)="goToDetail(item.movie)">
+        
+        <img
+          slot="start"
+          [src]="item.movie.img !== 'N/A' ? item.movie.img : 'assets/default-poster.jpg'"
+          [alt]="item.movie.title"
+          class="list-poster"
+          (error)="$event.target.src = 'assets/default-poster.jpg'"/>
+        
+        <ion-label>
+          <h2 class="item-title">{{ item.movie.title }}</h2>
+          <p class="item-year">{{ item.movie.year }}</p>
+          <p class="item-genre">{{ item.movie.genre | slice:0:40 }}{{ item.movie.genre.length > 40 ? '...' : '' }}</p>
+          
+          <div class="imdb-rating" *ngIf="item.movie.imdbRating && item.movie.imdbRating !== 'N/A'">
+            <ion-icon name="star-outline" color="warning"></ion-icon>
+            <span class="rating-value">{{ getRating(item.movie.imdbRating) }}</span>
+          </div>
+          
+          <div class="watch-info">
+            <div class="times-watched">
+              <ion-icon name="eye-outline"></ion-icon>
+              <span>Watched {{ item.timesWatched }}x</span>
+            </div>
+            <div class="last-watched">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>Last: {{ item.lastWatchedAt | date:'MMM d, yyyy' }}</span>
+            </div>
+          </div>
+        </ion-label>
+        
+        <ion-button
+          slot="end"
+          fill="clear"
+          class="increment-btn"
+          (click)="incrementTimesWatched(item)">
+          <ion-icon
+            slot="icon-only"
+            name="add-circle-outline"
+            color="success">
+          </ion-icon>
+        </ion-button>
+      </ion-item>
+      
+      <ion-item-options side="end">
+        <ion-item-option
+          color="success"
+          (click)="incrementTimesWatched(item)">
+          <ion-icon slot="top" name="add-circle-outline"></ion-icon>
+          +1 Watch
+        </ion-item-option>
+        <ion-item-option
+          color="warning"
+          (click)="resetTimesWatched(item)">
+          <ion-icon slot="top" name="refresh-outline"></ion-icon>
+          Reset
+        </ion-item-option>
+        <ion-item-option
+          color="danger"
+          (click)="removeFromWatched(item)">
+          <ion-icon slot="top" name="trash-outline"></ion-icon>
+          Remove
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <div class="footer-note" *ngIf="!isLoading && watchedList.length > 0">
+    <p>Swipe left on a movie to see more options</p>
+  </div>
+</ion-content>

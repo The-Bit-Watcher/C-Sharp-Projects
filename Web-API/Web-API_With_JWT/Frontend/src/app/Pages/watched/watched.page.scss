@@ -1,0 +1,198 @@
+.watched-content {
+  --background: #0f0f1a;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  
+  ion-spinner {
+    width: 48px;
+    height: 48px;
+  }
+  
+  p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 16px;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  
+  ion-icon {
+    font-size: 80px;
+    color: rgba(255, 255, 255, 0.2);
+  }
+  
+  h3 {
+    color: white;
+    margin-top: 20px;
+    font-size: 20px;
+  }
+  
+  p {
+    color: rgba(255, 255, 255, 0.5);
+    margin: 8px 0 24px;
+  }
+  
+  .find-btn {
+    --border-color: #e2b714;
+    --color: #e2b714;
+  }
+}
+
+// Statistics Summary
+.stats-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  margin-bottom: 8px;
+  
+  .stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    
+    ion-icon {
+      font-size: 24px;
+      color: #e2b714;
+    }
+    
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      margin-top: 4px;
+    }
+    
+    .stat-label {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 2px;
+    }
+  }
+}
+
+.watched-item {
+  --background: #1e1e2e;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  
+  .list-poster {
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 12px;
+  }
+  
+  .item-title {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  
+  .item-year {
+    color: #e2b714;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  
+  .item-genre {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  
+  .imdb-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    
+    .stars {
+      color: #ffc107;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    
+    .rating-value {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 10px;
+    }
+  }
+  
+  .watch-info {
+    display: flex;
+    gap: 12px;
+    margin-top: 4px;
+    
+    .times-watched, .last-watched {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      
+      ion-icon {
+        font-size: 12px;
+        color: #e2b714;
+      }
+      
+      span {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+  }
+  
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    .increment-btn {
+      --color: #4CAF50;
+      margin: 0;
+      height: 40px;
+      
+      ion-icon {
+        font-size: 28px;
+      }
+    }
+  }
+}
+
+ion-item-option {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  
+  ion-icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+}
+
+.footer-note {
+  text-align: center;
+  padding: 20px;
+  
+  p {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 12px;
+    font-style: italic;
+  }
+}
