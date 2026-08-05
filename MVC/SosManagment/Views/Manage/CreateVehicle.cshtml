@@ -1,0 +1,41 @@
+﻿@model HAS01.Models.Booking.Vehicle
+
+@{
+    ViewBag.Title = Model.Id == 0 ? "Create Vehicle" : "Edit Vehicle";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(Model.Id == 0 ? "CreateVehicle" : "EditVehicle", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.VehicleType)
+        @Html.DropDownListFor(model => model.VehicleType, new SelectList(new[]
+        {
+            "Advanced Life Support", "Basic Life Support", "Patient Support" ,"Medical Utility Vehicle" ,"Event Medical Ambulance" ,"Air Ambulance"
+        }), "Select Vehicle Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.VehicleType)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RegistrationNumber)
+        @Html.TextBoxFor(model => model.RegistrationNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.RegistrationNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImagePath, "Vehicle Image")
+        <input type="file" name="imageFile" class="form-control-file" />
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <img src="@Model.ImagePath" class="img-thumbnail mt-2" style="max-height: 100px;" />
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    @Html.ActionLink("Cancel", "Manage", "Manage", null, new { @class = "btn btn-secondary" })
+}
+

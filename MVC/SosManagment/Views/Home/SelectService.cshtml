@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "SelectService";
+}
+
+<head>
+    <link rel="stylesheet" href="~/Content/Service.css" />
+</head>
+
+<div class="services-container">
+    <h2>Select a service...</h2>
+    <p class="subtitle">
+        Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar elementum tempus hac tellus libero accumsan.
+    </p>
+
+    <div class="service-blocks">
+        @* Goes to Correct Page and pass data correctly. Going to Display the value in the booking Form*@
+        <form method="post" action="@Url.Action("BookingForm", "SelectService")">
+            <input type="hidden" name="serviceType" value="Advanced Life Support" />
+            <button type="submit" class="service-block">
+                <h3>ALS (Advanced Life Support)</h3>
+                <p>ALS ambulance is staffed by a Paramedic and is used to transport patients who require high level of care.</p>
+            </button>
+        </form>
+
+        <form method="post" action="@Url.Action("BookingForm", "SelectService")">
+            <input type="hidden" name="serviceType" value="Basic Life Support" />
+            <button type="submit" class="service-block">
+                <h3>BLS (Basic Life Support)</h3>
+                <p>BLS ambulance provides transport to patients who are in a non life-threatening condition.</p>
+            </button>
+        </form>
+
+        <form method="post" action="@Url.Action("BookingForm", "SelectService")">
+            <input type="hidden" name="serviceType" value="Patient Transport" />
+            <button type="submit" class="service-block">
+                <h3>Patient Transport</h3>
+                <p>The most basic type of transport for patients requiring ambulatory support to and from the hospital.</p>
+            </button>
+        </form>
+
+        <form method="post" action="@Url.Action("BookingForm", "SelectService")">
+            <input type="hidden" name="serviceType" value="Medical Utility Vehicle" />
+            <button type="submit" class="service-block">
+                <h3>Medical Utility Vehicle</h3>
+                <p>A state-of-the-art van that is designed to facilitate the movement and transport of patients.</p>
+            </button>
+        </form>
+
+        <form method="post" action="@Url.Action("BookingForm", "SelectService")">
+            <input type="hidden" name="serviceType" value="Event Medical Ambulance" />
+            <button type="submit" class="service-block">
+                <h3>Event Medical Ambulance</h3>
+                <p>Ambulances stationed at events to provide medical assistance (concerts, sports, etc.).</p>
+            </button>
+        </form>
+
+        <form method="post" action="@Url.Action("BookingForm", "SelectService")">
+            <input type="hidden" name="serviceType" value="Air Ambulance" />
+            <button type="submit" class="service-block">
+                <h3>Air Ambulance</h3>
+                <p>Air ambulance for long-distance transfer in emergency/non-emergency situations.</p>
+            </button>
+        </form>
+
+    </div>
+</div>

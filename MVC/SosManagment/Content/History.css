@@ -1,0 +1,77 @@
+﻿body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+
+.tagline {
+    font-style: italic;
+    color: #6c757d;
+}
+
+.history-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.ride-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    border: none;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+    .ride-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .ride-card.normal {
+        border-left: 4px solid #28a745;
+    }
+
+    .ride-card.sos {
+        border-left: 4px solid #dc3545;
+        background-color: #fff8f8;
+    }
+
+.ride-date {
+    font-weight: 600;
+    color: #495057;
+}
+
+.sos-badge {
+    background-color: #dc3545;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.ride-detail {
+    margin-bottom: 6px;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #6c757d;
+    display: inline-block;
+    width: 120px;
+}
+
+.detail-value {
+    color: #212529;
+}
+
+hr {
+    opacity: 0.2;
+    margin: 30px 0;
+}

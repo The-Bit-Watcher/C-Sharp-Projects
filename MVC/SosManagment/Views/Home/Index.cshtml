@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    <div class="text-center">
+        <h1 class="display-4">Welcome to Ambulance Booking</h1>
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <p>
+                    @Html.ActionLink("Book Ambulance", "SelectService", "Home", null, new { @class = "btn btn-primary btn-lg" })
+                </p>
+
+                @*<p>
+                @Html.ActionLink("Go to History", "History", "Home", null, new { @class = "btn btn-primary" })
+            </p>this one works*@
+
+            </div>           
+                    <form action="@Url.Action("EmergencyBooking", "Home")" method="post">
+                        <button type="submit" class="btn btn-danger custom-round">S.O.S.</button>
+                    </form>           
+        </div>
+    </div>
+</main>
+

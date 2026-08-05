@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "Confirmed";
+}
+
+@model HAS01.Models.Booking.Bookings
+
+<head>
+    <title>Booking Confirmed | RescueBus</title>
+    <link rel="stylesheet" href="~/Content/Confirmed.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card confirmation-card mb-5">
+                    <div class="card-header confirmation-header text-center py-3">
+                        <h2 class="mb-0">Booking Confirmed</h2>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="detail-section">
+                            <h4 class="mb-4">Booking Details</h4>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <p class="detail-label">Booking ID:</p>
+                                    <p class="detail-value" id="bookingId"></p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p class="detail-label">Date Booked:</p>
+                                    <p class="detail-value" id="bookingDate"></p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p class="detail-label">Pick-Up Time:</p>
+                                    <p class="detail-value" id="pickupTime"></p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p class="detail-label">Pick-Up Address:</p>
+                                    <p class="detail-value" id="pickupAddress"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h4 class="mb-4">Driver Details</h4>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <p class="detail-label">Driver Name:</p>
+                                            <p class="detail-value">@Model.Driver.Name</p>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <p class="detail-label">Phone Number:</p>
+                                            <p class="detail-value">@Model.Driver.Number</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <img id="driverImage" class="profile-image"
+                                         src="@Url.Content(Model.Driver.ImagePath ?? "~/Content/placeholder-driver.jpg")"
+                                         alt="Driver Image" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h4 class="mb-4">Ambulance Details</h4>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <p class="detail-label">Ambulance Type:</p>
+                                            <p class="detail-value">@Model.Vehicle.VehicleType</p>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <p class="detail-label">Registration Number:</p>
+                                            <p class="detail-value">@Model.Vehicle.RegistrationNumber</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <img id="ambulanceImage" class="ambulance-image"
+                                         src="@Url.Content(Model.Vehicle.ImagePath ?? "~/Content/placeholder-ambulance.jpg")"
+                                         alt="Ambulance Image" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const booking = JSON.parse(localStorage.getItem('latestBooking'));
+
+            if (booking) {
+                const bookingId = booking.bookingId || generateGUID();
+
+                const bookingDate = new Date(booking.bookingTime);
+                const formattedDate = bookingDate.toLocaleDateString('en-GB');
+                const formattedTime = booking.pickUpTime || '--:--';
+
+                document.getElementById('bookingId').textContent = bookingId;
+                document.getElementById('bookingDate').textContent = formattedDate;
+                document.getElementById('pickupTime').textContent = formattedTime;
+                document.getElementById('pickupAddress').textContent = booking.address;
+                document.getElementById('driverName').textContent = booking.driverName || '--';
+                document.getElementById('driverPhone').textContent = booking.driverPhone || '--';
+                document.getElementById('ambulanceType').textContent = booking.serviceType || '--';
+                document.getElementById('ambulanceReg').textContent = booking.ambulanceReg || '--';
+
+                if (booking.driverImage) {
+                    document.getElementById('driverImage').src = booking.driverImage;
+                }
+                if (booking.ambulanceImage) {
+                    document.getElementById('ambulanceImage').src = booking.ambulanceImage;
+                }
+            }
+        });
+
+        function generateGUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+    </script>
+</body>
+

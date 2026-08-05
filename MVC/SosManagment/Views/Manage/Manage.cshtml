@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "Manage";
+}
+
+@model HAS01.Models.ManageViewModel
+
+@{
+    ViewBag.Title = "Driver and Vehicle Management";
+}
+
+<div class="container management-container">
+    <h2>Driver and Vehicle Management</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>Drivers</h3>
+                    <div class="d-flex justify-content-between align-items-center">
+                        @Html.ActionLink("Add New Driver", "CreateDriver", "Manage", null, new { @class = "btn btn-sm btn-primary" })
+                        <div class="driver-search">
+                            @using (Ajax.BeginForm("SearchDrivers", "Management", new AjaxOptions { UpdateTargetId = "driversList" }))
+                            {
+                                <div class="input-group">
+                                    <input type="text" name="Name" class="form-control form-control-sm" placeholder="First name" />
+                                    <select name="serviceType" class="form-control form-control-sm">
+                                        <option value="">All Services</option>
+                                        <option value="ALS">Advanced Life Support</option>
+                                        <option value="BLS">Basic Life Support</option>
+                                        <option value="PS">Patient Support</option>
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">Search</button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" id="driversList">
+                    @Html.Partial("DriversListPartial", Model.Drivers)
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>Vehicles</h3>
+                    <div class="d-flex justify-content-between align-items-center">
+                        @Html.ActionLink("Add New Vehicle", "CreateVehicle", null, new { @class = "btn btn-sm btn-primary" })
+                        @Html.ActionLink("Export", "ExportVehicles", null, new { @class = "btn btn-sm btn-outline-secondary" })
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Type</th>
+                                <th>Registration</th>
+                                <th>Service</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var vehicle in Model.Vehicles)
+                            {
+                                <tr data-id="@vehicle.Id">
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(vehicle.ImagePath))
+                                        {
+                                            <img src="@vehicle.ImagePath" class="img-thumbnail" style="max-height: 50px;" />
+                                        }
+                                    </td>
+                                    <td>@vehicle.Id</td>
+                                    <td>@vehicle.RegistrationNumber</td>
+                                    <td>@vehicle.VehicleType</td>
+                                    <td>
+                                        <a href="@Url.Action("EditVehicle", "Manage", new { id = vehicle.Id })"
+                                           class="btn btn-sm btn-outline-primary">Edit</a>
+                                        <button type="button" class="btn btn-sm btn-outline-danger delete-vehicle" data-id="@vehicle.Id">Delete</button>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script>
+       $(document).ready(function() {                  
+            $(document).on("click", ".delete-vehicle", function() {
+                var id = $(this).data("id");
+                if (confirm("Are you sure you want to delete this vehicle?")) {
+                    $.ajax({
+                        url: '@Url.Action("DeleteVehicle", "Manage")',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function(response) {
+                            if (response.success) {
+                                // Remove the row from the table
+                                $('tr[data-id="' + id + '"]').fadeOut(300, function() {
+                                    $(this).remove();
+                                });
+                            } else {
+                                alert(response.message || "Failed to delete vehicle");
+                            }
+                        },
+                        error: function() {
+                            alert("Error occurred while deleting vehicle");
+                        }
+                    });
+                }
+            });
+       });
+
+        $(document).ready(function () {
+            bindDeleteHandlers();
+
+            $(document).on("ajaxSuccess", function () {
+                bindDeleteHandlers();
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "CreateEdit";
+}
+
+@model HAS01.Models.Booking.Driver
+
+@{
+    ViewBag.Title = Model.Id == 0 ? "Create Driver" : "Edit Driver";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(Model.Id == 0 ? "CreateDriver" : "EditDriver", "Management", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name)
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Number)
+        @Html.TextBoxFor(model => model.Number, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Number)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LicenseNumber)
+        @Html.TextBoxFor(model => model.LicenseNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.LicenseNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DriverType)
+        @Html.DropDownListFor(model => model.DriverType, new SelectList(new[]
+        {
+            "ALS (Advanced Life Support)",
+            "BLS (Basic Life Support)",
+            "PS (Patient Support)"
+        }), "Select Service Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DriverType)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImagePath, "Driver Image")
+        <input type="file" name="imageFile" class="form-control-file" />
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <img src="@Model.ImagePath" class="img-thumbnail mt-2" style="max-height: 100px;" />
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
+}
+

@@ -1,0 +1,35 @@
+﻿@model List<HAS01.Models.Booking.Driver>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Service</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var driver in Model)
+        {
+            <tr data-id="@driver.Id">
+                <td>
+                    @if (!string.IsNullOrEmpty(driver.ImagePath))
+                    {
+                        <img src="@driver.ImagePath" class="img-thumbnail" style="max-height: 50px;" />
+                    }
+                </td>
+                <td>@driver.Name</td>
+                <td>@driver.Number</td>
+                <td>@driver.DriverType</td>
+                <td>
+                    <a href="@Url.Action("EditDriver", "Manage", new { id = driver.Id })"
+                       class="btn btn-sm btn-outline-primary">Edit</a>
+                    <button type="button" class="btn btn-sm btn-outline-danger delete-driver" data-id="@driver.Id">Delete</button>
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>

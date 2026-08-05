@@ -1,0 +1,54 @@
+﻿@model HAS01.Models.Booking.Driver
+
+@{
+    ViewBag.Title = "Edit Driver";
+}
+
+<h2>Edit Driver</h2>
+
+@using (Html.BeginForm("EditDriver", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name)
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Number)
+        @Html.TextBoxFor(model => model.Number, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Number)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LicenseNumber)
+        @Html.TextBoxFor(model => model.LicenseNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.LicenseNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DriverType)
+        @Html.DropDownListFor(model => model.DriverType, new SelectList(new[]
+        {
+           "Advanced Life Support", "Basic Life Support", "Patient Support" ,"Medical Utility Vehicle" ,"Event Medical Ambulance" ,"Air Ambulance"
+        }), "Select Service Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DriverType)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImagePath, "Driver Image")
+        <input type="file" name="imageFile" class="form-control-file" />
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <img src="@Model.ImagePath" class="img-thumbnail mt-2" style="max-height: 100px;" />
+            @Html.HiddenFor(model => model.ImagePath)
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    @Html.ActionLink("Cancel", "Manage", null, new { @class = "btn btn-secondary" })
+}
+

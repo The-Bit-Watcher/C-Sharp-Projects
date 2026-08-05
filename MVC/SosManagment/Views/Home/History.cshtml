@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "History";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride History | RescueBus</title>
+    <link href="~/Content/History.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container history-container">
+        <h2 class="mb-4">Ride History</h2>
+
+        <div id="rideHistoryList">
+            <div class="card ride-card normal mb-3" onclick="viewBooking('booking1')">
+                <div class="card-body">
+                    <div class="ride-date">15/06/2023</div>
+                    <div class="ride-detail">
+                        <span class="detail-label">Booking ID:</span>
+                        <span class="detail-value">B-2847-2023</span>
+                    </div>
+                    <div class="ride-detail">
+                        <span class="detail-label">Driver Name:</span>
+                        <span class="detail-value">John Smith</span>
+                    </div>
+                    <div class="ride-detail">
+                        <span class="detail-label">Ambulance Type:</span>
+                        <span class="detail-value">ALS (Advanced Life Support)</span>
+                    </div>
+                    <div class="ride-detail">
+                        <span class="detail-label">Pick-Up Address:</span>
+                        <span class="detail-value">123 Main St, Springfield</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card ride-card sos mb-3" onclick="viewBooking('booking2')">
+                <div class="card-body">
+                    <div class="ride-date">10/06/2023 <span class="sos-badge">S.O.S.</span></div>
+                    <div class="ride-detail">
+                        <span class="detail-label">Booking ID:</span>
+                        <span class="detail-value">B-2846-2023</span>
+                    </div>
+                    <div class="ride-detail">
+                        <span class="detail-label">Driver Name:</span>
+                        <span class="detail-value">Sarah Johnson</span>
+                    </div>
+                    <div class="ride-detail">
+                        <span class="detail-label">Ambulance Type:</span>
+                        <span class="detail-value">ALS (Advanced Life Support)</span>
+                    </div>
+                    <div class="ride-detail">
+                        <span class="detail-label">Pick-Up Address:</span>
+                        <span class="detail-value">456 Emergency Lane, Springfield</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function viewBooking(bookingId) {
+            
+            window.location.href = `booking-confirmed.html?id=${bookingId}`;
+
+            alert(`Viewing booking details for: ${bookingId}`);
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+           
+            const mockRideHistory = [
+                {
+                    id: 'booking1',
+                    date: '15/06/2023',
+                    bookingId: 'B-2847-2023',
+                    driverName: 'John Smith',
+                    ambulanceType: 'ALS (Advanced Life Support)',
+                    address: '123 Main St, Springfield',
+                    isSOS: false
+                },
+                {
+                    id: 'booking2',
+                    date: '10/06/2023',
+                    bookingId: 'B-2846-2023',
+                    driverName: 'Sarah Johnson',
+                    ambulanceType: 'ALS (Advanced Life Support)',
+                    address: '456 Emergency Lane, Springfield',
+                    isSOS: true
+                }
+            ];
+
+            populateRideHistory(mockRideHistory);
+        });
+
+        function populateRideHistory(rides) {
+            const container = document.getElementById('rideHistoryList');
+            container.innerHTML = ''; 
+
+            rides.forEach(ride => {
+                const rideCard = document.createElement('div');
+                rideCard.className = `card ride-card mb-3 ${ride.isSOS ? 'sos' : 'normal'}`;
+                rideCard.onclick = () => viewBooking(ride.id);
+
+                const sosBadge = ride.isSOS ? '<span class="sos-badge">S.O.S.</span>' : '';
+
+                rideCard.innerHTML = `
+                    <div class="card-body">
+                        <div class="ride-date">${ride.date} ${sosBadge}</div>
+                        <div class="ride-detail">
+                            <span class="detail-label">Booking ID:</span>
+                            <span class="detail-value">${ride.bookingId}</span>
+                        </div>
+                        <div class="ride-detail">
+                            <span class="detail-label">Driver Name:</span>
+                            <span class="detail-value">${ride.driverName}</span>
+                        </div>
+                        <div class="ride-detail">
+                            <span class="detail-label">Ambulance Type:</span>
+                            <span class="detail-value">${ride.ambulanceType}</span>
+                        </div>
+                        <div class="ride-detail">
+                            <span class="detail-label">Pick-Up Address:</span>
+                            <span class="detail-value">${ride.address}</span>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(rideCard);
+            });
+        }
+    </script>
+</body>
