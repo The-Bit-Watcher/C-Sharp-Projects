@@ -1,0 +1,6 @@
+@Ass3WebApi_HostAddress = http://localhost:5174
+
+GET {{Ass3WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
